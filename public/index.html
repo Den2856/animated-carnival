@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo delivery</title>
+
+    <link rel="stylesheet" href="../public/static/css/blog.css">
+	<link rel="stylesheet" href="../public/static/css/header.css">
+	<link rel="stylesheet" href="../public/static/css/footer.css">
+
+	<script src="../public/static/js/app.js" defer></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+	
+	<header class="header">
+		<div class="wrapper">
+			<div class="container top">
+				<div class="logo"></div>
+				<nav class="nav">
+					<ul class="nav-list">
+					  <li><a href="components.html">Главное</a></li>
+					  <li><a href="news-comp.html">Направления деятельности</a></li>
+					  
+					  <li class="dropdown">
+						<a href="news.html" class="nav-item">Новости</a>
+						<div class="dropdown-content">
+						  <ul>
+							<li><a href="#">Новости</a></li>
+							<li><a href="#">Видео</a></li>
+							<li><a href="#">СМИ</a></li>
+						  </ul>
+						</div>
+					  </li>
+				  
+					  <li><a href="form.html">Контакты</a></li>
+					  <li><a href="index.html">Оставить обращение</a></li>
+					</ul>
+				</nav>
+				<div class="logo logo-burger">
+					<button class="burger-menu">
+						<img width="40.81px" height="40.81px" src="../public/static/icons/burger.svg" alt="" />
+					</button>
+				</div>	  
+			</div>
+			<div class="container show" style="display: none;">
+				<input type="text" class="search-input" placeholder="Поиск по сайту" />
+			</div>
+		</div>
+	</header>
+
+	<section class="form-section">
+		<div class="breadcrumbs">
+			<a href="components.html" class="breadcrumbs-link">Главная</a>
+			<span class="breadcrumbs-separator">»</span>
+			<span class="current-page">Обращения граждан</span>
+		</div>
+		<div id="modal" class="modal">
+			<div class="modal-content">
+				<span class="close-button">&times;</span>
+				<p id="modal-message"></p>
+			</div>
+		</div>
+		<form class="citizen-form">
+			<input type="text" placeholder="ФИО" id="name" class="form-input" required />
+			<input type="email" placeholder="E-mail" id="email" class="form-input"  required/>
+			<input type="tel" placeholder="+7(952)-664-77-23" id="phone" class="form-input"  required/>
+			<textarea placeholder="Введите текст вашего обращения" id="message" class="form-textarea" required></textarea>
+		  	<div class="file-upload">
+				<label for="fileInput" class="file-label">Прикрепить файлы <span class="file-icon">📎</span></label>
+				<input type="file" id="fileInput" name="files[]" multiple style="display: none;" required />
+				<div id="fileList" class="file-list"></div>
+		  	</div>
+		  	<div class="checkbox-wrapper">
+				<input type="checkbox" id="privacy-policy" required/>
+				<label class="policy" for="privacy-policy">
+				Оставляя заявку, вы соглашаетесь с условиями
+				<a href="#" class="policy-link">политики конфиденциальности</a>
+				</label>
+		  	</div>
+		  	<button type="submit" class="submit-button">Отправить</button>
+		</form>
+	</section>
+	<footer class="footer">
+		<div class="footer-container">
+			<div class="footer-left">
+				<div>
+					<div class="logo"></div>
+					<div class="under-logo">
+						<img src="../public/static/icons/vk.svg" width="48px" loading="lazy"/>
+						<img src="../public/static/icons/tg.svg" width="48px" loading="lazy"/>
+					</div>
+				</div>
+			
+				<div class="links">
+					<p class="site-name">Наименование сайта</p>
+					<p class="long-text">Очень очень очень очень длинный текст</p>
+					<p class="map-link">Карта сайта</p>
+					<img src="../public/static/icons/gistemo.svg" width="150px" class="gistemo" loading="lazy" alt="">
+					<div>
+						<img src="../public/static/icons/visibi.svg" alt="">
+						<a href="#" style="position: relative; top: -15px;">Версия для слабовидящих</a>
+					</div>
+				</div>
+			</div>
+			  
+		  	<div class="footer-center">
+				<p>Президент России</p>
+				<p>Правительство России</p>
+				<p class="long-text">Очень очень очень очень очень длинный текст</p>
+				<p class="long-text">Очень очень очень очень очень длинный текст</p>
+		  	</div>
+		  	<div class="footer-right">
+				<p style="margin-bottom: 25px;">Очень очень очень очень очень длинный текст</p>
+				<p>Единый портал государственных услуг</p>
+				<p>Политика обработки персональных данных</p>
+				<p style="align-self: end;">© Все права защищены</p>
+		  	</div>
+		</div>
+	</footer>
+	  
+	<script>
+		$(document).ready(function () {
+			const modal = $('#modal');
+			const modalMessage = $('#modal-message');
+			const closeButton = $('.close-button');
+			const submitButton = $('.submit-button');
+			const form = $('.citizen-form');
+
+
+			function openModal(message) {
+				modalMessage.text(message);
+				modal.fadeIn(); 
+			}
+
+			function closeModal() {
+				modal.fadeOut(); 
+			}
+
+
+  			closeButton.on('click', closeModal);
+
+			$(window).on('click', function (event) {
+				if ($(event.target).is(modal)) {
+				closeModal();
+				}
+  			});
+
+			function validateForm() {
+				const name = $('#name').val().trim();
+				const email = $('#email').val().trim();
+				const phone = $('#phone').val().trim();
+				const message = $('#message').val().trim();
+				const file = $('#privacy-policy').prop('checked');
+
+				if (!name || !email || !phone || !message || !file) {
+				return 'Пожалуйста, заполните все поля!';
+				}
+
+				const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+				if (!emailPattern.test(email)) {
+				return 'Введите корректный email!';
+				}
+
+				const phonePattern = /^\+7\s?\(\d{3}\)\s?\d{3}-\d{2}-\d{2}$/;
+				if (!phonePattern.test(phone)) {
+				return 'Введите корректный номер телефона! А также не забудьте прикрепить файлы';
+				}
+
+    			return '';
+  			}
+
+			submitButton.on('click', function () {
+				const validationMessage = validateForm();
+
+				if (validationMessage) {
+				openModal(validationMessage);
+				} else {
+				openModal('Форма успешно заполнена!');
+				}
+  			});
+		});
+	</script>
+	  
+</body>
+</html>
