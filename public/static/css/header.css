@@ -102,7 +102,6 @@
   opacity: 1;
 }
 
-
 .dropdown-content ul {
   list-style: none;
   padding: 0;
@@ -116,14 +115,11 @@
   display: block;
 }
 
-
-
 .dropdown-content li a:hover {
   background-color: #ffc107;
   color: white;
 }
 
-/* Показываем выпадающий список при наведении */
 .dropdown:hover .dropdown-content {
   display: block;
 }
